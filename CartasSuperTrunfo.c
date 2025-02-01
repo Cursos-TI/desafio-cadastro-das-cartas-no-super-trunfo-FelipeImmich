@@ -3,14 +3,33 @@
 // Desafio Super Trunfo - Países
 // Tema 1 - Cadastro das Cartas
 
+// Defindo a funcao de exibir a carta
+
+void printcarta(char a[4] ,char b[50],int c,int d, float e, float f,float g, float h){
+
+    printf("Código da Cidade: %.3s\n", a);
+    printf("Nome da cidade: %s\n", b);
+    printf("População da cidade: %d habitantes\n", c);
+    printf("Número de pontos turísticos: %d\n", d);
+    printf("Área: %.2f m²\n", e);
+    printf("PIB: %.2f\n", f);
+    printf("Densidade Populacional: %.2f\n",g);
+    printf("PIB per capita: %.2f\n",h);
+}
+
+//Iniciando
+
 int main() {
+
     // Definindo variáveis separadas para cada atributo da cidade.
+
     char codigo_cidade[4]="";
     char nome[50]="";
     int populacao,numero_pontos_turisticos=0;
     float area, PIB=0;
     
     // Cadastro das Cartas: Entrada de dados
+
     printf("Insira o código da cidade: ");
     scanf("%s", codigo_cidade);
 
@@ -28,16 +47,16 @@ int main() {
 
     printf("Insira o PIB: ");
     scanf("%f", &PIB);
+
+    // Calculando densidade populacional e PIB per capita
+
+    float den_pop = (float) populacao / area;
+    float pib_cap = (float) PIB / populacao;
     
     // Exibição dos Dados das Cartas: Saida Formatada
-    
-    printf("A Seguinte carta foi cadastrada com sucesso.\n");
-    printf("Código da Cidade: %.3s\n", codigo_cidade);
-    printf("Nome da cidade: %s\n", nome);
-    printf("População da cidade: %d habitantes\n", populacao);
-    printf("Número de pontos turísticos: %d\n", numero_pontos_turisticos);
-    printf("Área: %.2f m²\n", area);
-    printf("PIB: %.2f\n", PIB);
+
+    printf("\nA Seguinte carta foi cadastrada com sucesso.\n\n");
+    printcarta(codigo_cidade,nome,populacao,numero_pontos_turisticos,area,PIB,den_pop,pib_cap);
 
     return 0;
 }
