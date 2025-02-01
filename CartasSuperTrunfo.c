@@ -1,62 +1,133 @@
 #include <stdio.h>
 
-// Desafio Super Trunfo - Países
-// Tema 1 - Cadastro das Cartas
+typedef struct {
+    char codigo_cidade[4];
+    char nome[50];
+    int populacao, numero_pontos_turisticos;
+    float area, PIB, densidade, PIB_CAP, super_poder;
+} Carta;
 
-// Defindo a funcao de exibir a carta
-
-void printcarta(char a[4] ,char b[50],int c,int d, float e, float f,float g, float h){
-
-    printf("Código da Cidade: %.3s\n", a);
-    printf("Nome da cidade: %s\n", b);
-    printf("População da cidade: %d habitantes\n", c);
-    printf("Número de pontos turísticos: %d\n", d);
-    printf("Área: %.2f m²\n", e);
-    printf("PIB: %.2f\n", f);
-    printf("Densidade Populacional: %.2f\n",g);
-    printf("PIB per capita: %.2f\n",h);
+// Função de exibir a carta
+void printcarta(Carta carta){
+    printf("Código da Cidade: %.3s\n", carta.codigo_cidade);
+    printf("Nome da cidade: %s\n", carta.nome);
+    printf("População da cidade: %d habitantes\n", carta.populacao);
+    printf("Número de pontos turísticos: %d\n", carta.numero_pontos_turisticos);
+    printf("Área: %.2f m²\n", carta.area);
+    printf("PIB: %.2f\n", carta.PIB);
+    printf("Densidade Populacional: %.2f\n", carta.densidade);
+    printf("PIB per capita: %.2f\n", carta.PIB_CAP);
+    printf("Super Poder: %.2f\n\n", carta.super_poder);
 }
 
-//Iniciando
-
-int main() {
-
-    // Definindo variáveis separadas para cada atributo da cidade.
-
-    char codigo_cidade[4]="";
-    char nome[50]="";
-    int populacao,numero_pontos_turisticos=0;
-    float area, PIB=0;
+// Função para cadastrar a carta
+Carta cadastrar_carta() {
+    Carta carta;
     
-    // Cadastro das Cartas: Entrada de dados
-
     printf("Insira o código da cidade: ");
-    scanf("%s", codigo_cidade);
+    scanf("%s", carta.codigo_cidade);
 
     printf("Insira o nome da cidade: ");
-    scanf("%s", nome);
+    scanf("%s", carta.nome);
 
     printf("Insira a população: ");
-    scanf("%d", &populacao);
+    scanf("%d", &carta.populacao);
 
-    printf("Insira o Número de pontos turísticos: ");
-    scanf("%d", &numero_pontos_turisticos);
+    printf("Insira o número de pontos turísticos: ");
+    scanf("%d", &carta.numero_pontos_turisticos);
 
     printf("Insira a área: ");
-    scanf("%f", &area);
+    scanf("%f", &carta.area);
 
     printf("Insira o PIB: ");
-    scanf("%f", &PIB);
+    scanf("%f", &carta.PIB);
 
     // Calculando densidade populacional e PIB per capita
+    carta.densidade = (float) carta.populacao / carta.area;
+    carta.PIB_CAP = (float) carta.PIB / carta.populacao;
 
-    float den_pop = (float) populacao / area;
-    float pib_cap = (float) PIB / populacao;
+    // Calculando o Super Poder
+    carta.super_poder = carta.populacao + carta.numero_pontos_turisticos + carta.area + carta.PIB + carta.densidade + carta.PIB_CAP;
     
-    // Exibição dos Dados das Cartas: Saida Formatada
+    return carta;
+}
 
-    printf("\nA Seguinte carta foi cadastrada com sucesso.\n\n");
-    printcarta(codigo_cidade,nome,populacao,numero_pontos_turisticos,area,PIB,den_pop,pib_cap);
+// Função para comparar duas cartas
+void comparar_cartas(Carta carta1, Carta carta2) {
+    printf("\nComparação entre %s e %s\n", carta1.nome, carta2.nome);
+
+    // Comparação da densidade populacional (vence o menor valor)
+    if (carta1.densidade < carta2.densidade)
+        printf("Densidade Populacional: %s vence\n", carta1.nome);
+    else if (carta1.densidade > carta2.densidade)
+        printf("Densidade Populacional: %s vence\n", carta2.nome);
+    else
+        printf("Densidade Populacional: Empate\n");
+
+    // Comparação das outras propriedades (vence o maior valor)
+    if (carta1.populacao > carta2.populacao)
+        printf("População: %s vence\n", carta1.nome);
+    else if (carta1.populacao < carta2.populacao)
+        printf("População: %s vence\n", carta2.nome);
+    else
+        printf("População: Empate\n");
+
+    if (carta1.numero_pontos_turisticos > carta2.numero_pontos_turisticos)
+        printf("Número de Pontos Turísticos: %s vence\n", carta1.nome);
+    else if (carta1.numero_pontos_turisticos < carta2.numero_pontos_turisticos)
+        printf("Número de Pontos Turísticos: %s vence\n", carta2.nome);
+    else
+        printf("Número de Pontos Turísticos: Empate\n");
+
+    if (carta1.area > carta2.area)
+        printf("Área: %s vence\n", carta1.nome);
+    else if (carta1.area < carta2.area)
+        printf("Área: %s vence\n", carta2.nome);
+    else
+        printf("Área: Empate\n");
+
+    if (carta1.PIB > carta2.PIB)
+        printf("PIB: %s vence\n", carta1.nome);
+    else if (carta1.PIB < carta2.PIB)
+        printf("PIB: %s vence\n", carta2.nome);
+    else
+        printf("PIB: Empate\n");
+
+    if (carta1.PIB_CAP > carta2.PIB_CAP)
+        printf("PIB per Capita: %s vence\n", carta1.nome);
+    else if (carta1.PIB_CAP < carta2.PIB_CAP)
+        printf("PIB per Capita: %s vence\n", carta2.nome);
+    else
+        printf("PIB per Capita: Empate\n");
+
+    if (carta1.super_poder > carta2.super_poder)
+        printf("Super Poder: %s vence\n", carta1.nome);
+    else if (carta1.super_poder < carta2.super_poder)
+        printf("Super Poder: %s vence\n", carta2.nome);
+    else
+        printf("Super Poder: Empate\n");
+}
+
+    // Inicio
+int main() {
+
+    //Quantidade de cartas
+    int num_cartas = 2;
+    Carta cartas[num_cartas];
+    
+    //Loop para cadastrar todas
+    for (size_t i = 0; i < num_cartas; i++){
+        cartas[i] = cadastrar_carta();
+        printf("\nA Seguinte carta foi cadastrada com sucesso.\n\n");
+        printcarta(cartas[i]);
+    }
+    
+    // Comparando duas cartas de exemplo (por exemplo, cartas 0 e 1)
+    if (num_cartas >= 2) {
+        comparar_cartas(cartas[0], cartas[1]);
+    } else {
+        printf("Você precisa cadastrar pelo menos duas cartas para comparar.\n");
+    }
 
     return 0;
 }
